@@ -21,7 +21,9 @@ namespace SSHApp
         {
 
             // Read all lines from the text file into an array
-            string[] lines = File.ReadAllLines("C:\\Users\\Ryan\\source\\repos\\SSHApp\\Nodes.txt");
+            string fileName = "Nodes.txt";
+            string path = Path.Combine(Environment.CurrentDirectory, fileName);
+            string[] lines = File.ReadAllLines(path);
             foreach (string line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
