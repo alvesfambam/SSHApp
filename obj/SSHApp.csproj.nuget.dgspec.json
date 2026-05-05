@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ryan\\source\\repos\\SSHApp\\SSHApp.csproj": {}
+    "C:\\Users\\Ryan\\source\\repos\\alvesfambam\\SSHApp\\SSHApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ryan\\source\\repos\\SSHApp\\SSHApp.csproj": {
+    "C:\\Users\\Ryan\\source\\repos\\alvesfambam\\SSHApp\\SSHApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ryan\\source\\repos\\SSHApp\\SSHApp.csproj",
+        "projectUniqueName": "C:\\Users\\Ryan\\source\\repos\\alvesfambam\\SSHApp\\SSHApp.csproj",
         "projectName": "SSHApp",
-        "projectPath": "C:\\Users\\Ryan\\source\\repos\\SSHApp\\SSHApp.csproj",
+        "projectPath": "C:\\Users\\Ryan\\source\\repos\\alvesfambam\\SSHApp\\SSHApp.csproj",
         "packagesPath": "C:\\Users\\Ryan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ryan\\source\\repos\\SSHApp\\obj\\",
+        "outputPath": "C:\\Users\\Ryan\\source\\repos\\alvesfambam\\SSHApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -75,7 +75,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
