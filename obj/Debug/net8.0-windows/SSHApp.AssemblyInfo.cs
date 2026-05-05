@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SSHApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+481f8140ae155f665f04d05d38f6ada1231758a6")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3053986887ff66260026b23c51f8b809736dd2d")]
+>>>>>>> 741b8155586b04db7e076919c1546df1d4bde05d
 [assembly: System.Reflection.AssemblyProductAttribute("SSHApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SSHApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
