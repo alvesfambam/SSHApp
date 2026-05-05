@@ -127,6 +127,7 @@ namespace SSHApp
             // 
             // dataGridView1
             // 
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -139,25 +140,24 @@ namespace SSHApp
             dataGridView1.RowTemplate.ReadOnly = true;
             dataGridView1.Size = new Size(198, 601);
             dataGridView1.TabIndex = 11;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // dataGridViewTextBoxColumn1
             // 
             dataGridViewTextBoxColumn1.HeaderText = "Host";
-            dataGridViewTextBoxColumn1.Name = "Host";
-            dataGridViewTextBoxColumn1.Width = 250;
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.Width = 57;
             // 
             // dataGridViewTextBoxColumn2
             // 
             dataGridViewTextBoxColumn2.HeaderText = "Command";
-            dataGridViewTextBoxColumn2.Name = "Command";
-            dataGridViewTextBoxColumn2.Width = 250;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.Width = 89;
             // 
             // dataGridViewTextBoxColumn3
             // 
             dataGridViewTextBoxColumn3.HeaderText = "PID";
-            dataGridViewTextBoxColumn3.Name = "PID";
-            dataGridViewTextBoxColumn1.Width = 50;
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.Width = 50;
             // 
             // button1
             // 
