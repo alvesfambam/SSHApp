@@ -1,4 +1,4 @@
-#ENV	ROLE	FQDN
+##ENV	ROLE	FQDN
 QA	SKAM	ecam-qa-skam1.host-au.telematics.com
 QA	APP	qa-app4.host-au.telematics.com
 QA	APP	qa-app5.host-au.telematics.com

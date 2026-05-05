@@ -1,0 +1,20 @@
+##Group		Name	Command
+SysLog	SysLog	sudo tail -f /var/log/syslog
+APP	API	sudo tail -f /home/api/shared/log/api.log
+APP	B2B	sudo tail -f /home/b2b/shared/log/b2b.log
+APP	BUS	sudo tail -f /home/bus/shared/log/bus.log
+APP	Camera	sudo tail -f /home/camera/shared/log/camera.log
+APP	Demo	sudo tail -f /home/demo/shared/log/demo.log
+APP	Event	sudo tail -f /home/event/shared/log/event.log
+APP	Geo	sudo tail -f /home/geo/shared/log/geo.log
+APP	IOTMTagUpdater	sudo tail -f /home/iotmtagupdater/shared/log/iotmtagupdater.log
+APP	Nextgen	sudo tail -f /home/nextgen/shared/lognextgenlog
+APP	NZTA	sudo tail -f /home/nzta/shared/log/nzta.log
+APP	OnsTraffic	sudo tail -f /home/onstraffic/shared/log/onstraffic.log
+APP	SA	sudo tail -f /home/sa/shared/log/sa.log
+APP	Scorecard	sudo tail -f /home/scorecard/shared/log/scorecard.log
+APP	Sentinel	sudo tail -f /home/sentinel/shared/log/sentinel.log
+APP	SmartJobs	sudo tail -f /home/smartjobs/shared/log/smartjobs.log
+APP	SMDP	sudo tail -f /home/smdp/shared/log/smdp.log
+APP	TDE	sudo tail -f /home/tde/shared/log/tde.log
+APP	VNC	sudo tail -f /home/vnc/shared/log/vnc.log
