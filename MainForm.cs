@@ -54,26 +54,26 @@ namespace SSHApp
             string[] lines = File.ReadAllLines(path);
             foreach (string line in lines)
             {
-                if ( string.IsNullOrWhiteSpace(line) || line.TrimStart().StartsWith("#")) continue; 
-                    string[] parts = line.Trim().Split('\t');
-                    TreeNodeCollection currentNodes = treeView2.Nodes;
-                    foreach (string part in parts)
+                if (string.IsNullOrWhiteSpace(line) || line.TrimStart().StartsWith("#")) continue;
+                string[] parts = line.Trim().Split('\t');
+                TreeNodeCollection currentNodes = treeView2.Nodes;
+                foreach (string part in parts)
+                {
+                    TreeNode[] foundNodes = currentNodes.Find(part, false);
+                    TreeNode currentNode;
+                    if (foundNodes.Length == 0)
                     {
-                        TreeNode[] foundNodes = currentNodes.Find(part, false);
-                        TreeNode currentNode;
-                        if (foundNodes.Length == 0)
-                        {
-                            currentNode = currentNodes.Add(part, part);
-                        }
-                        else
-                        {
-                            currentNode = foundNodes[0];
-                        }
-                        currentNodes = currentNode.Nodes;
+                        currentNode = currentNodes.Add(part, part);
                     }
+                    else
+                    {
+                        currentNode = foundNodes[0];
+                    }
+                    currentNodes = currentNode.Nodes;
+                }
             }
         }
-        
+
         private void CheckAllChildNodes(TreeNode treeNode, bool nodeChecked)
         {
             foreach (TreeNode node in treeNode.Nodes)
@@ -143,7 +143,7 @@ namespace SSHApp
                     {
                         richTextBox1.Invoke((Action)(() =>
                         {
-                            richTextBox1.AppendText("Error:"  + cmd.Error + Environment.NewLine);
+                            richTextBox1.AppendText("Error:" + cmd.Error + Environment.NewLine);
                         }));
                     }
 
@@ -172,27 +172,43 @@ namespace SSHApp
             //string host = localhost; // Replace with your server IP
             string username = "ralves"; // Replace with your SSH username
             string pemFilePath = @"C:\Users\Ryan\.ssh\id_rsa"; // Replace with PEM file path
-            string command = "sudo tail -f /var/log/syslog"; // Replace with your command
+            bool rowexists = false;
+            //string command = "sudo tail -f /var/log/syslog"; // Replace with your command
             List<TreeNode> checked_nodes = new List<TreeNode>();
             List<TreeNode> checked_cmds = new List<TreeNode>();
-            listBox1.Items.Clear();
             GetCheckedLevelNodes(treeView1.Nodes, 2, checked_nodes);
             GetCheckedLevelNodes(treeView2.Nodes, 2, checked_cmds);
-
-            //IterateCheckedNodes(treeView1.Nodes, treeView1.Nodes);
-
 
             foreach (TreeNode node in checked_nodes)
             {
                 foreach (TreeNode cmd in checked_cmds)
-                {
-
-                    listBox1.Items.Add(node.Text + "-"  + cmd.Text);
-                    // Run SSH command in a separate thread to avoid blocking UI
-                    System.Threading.Tasks.Task.Run(() =>
+                {                    
+                    rowexists = false;
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        if (row.Cells[0].Value != null && row.Cells[0].Value.Equals(node.Text))
                         {
-                            ExecuteSshCommand(node.Text, username, pemFilePath, cmd.Text);
-                        });
+                            if (row.Cells[1].Value != null && row.Cells[1].Value.Equals(cmd.Text))
+                            {
+                                //Row Exists
+                                rowexists = true;
+                                richTextBox1.AppendText($"'{node.Text + "-" + cmd.Text}' exists in the list." + Environment.NewLine);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (rowexists != true)
+                        {
+                            Task task = Task.Factory.StartNew(() =>
+                            {
+                                ExecuteSshCommand(node.Text, username, pemFilePath, cmd.Text);
+                            });
+
+                            richTextBox1.AppendText($"'{node.Text + "-" + cmd.Text}' Does not exists in the list." + $" and is now running on thread" + task.Id + Environment.NewLine);
+                            dataGridView1.Rows.Add(node.Text, cmd.Text, task.Id);                        
+                        }
+
                 }
             }
 
@@ -216,34 +232,13 @@ namespace SSHApp
         }
 
         // Recursive method to iterate through all nodes
-        private void IterateCheckedNodes(TreeNodeCollection nodes)
+        
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.Checked)
-                {
-                   if (node.Text.Contains(".com") == true)
-                    {
-                        foreach (TreeNode cmd in treeView1.Nodes)
-                        {
-                            if (cmd.Checked)
-                            {
-                                //add  checked items to node list
-                                listBox1.Items.Add(node.Text + "-"  + cmd.Text);
-                            }
-                            // Recursively check child nodes
-                            IterateCheckedNodes(cmd.Nodes);
-                        }                        
-                    }
-                }
-                // Recursively check child nodes
-                IterateCheckedNodes (node.Nodes);
-            }
 
-            
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

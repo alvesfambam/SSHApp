@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Windows.Forms;
 
 namespace SSHApp
 {
@@ -31,13 +32,15 @@ namespace SSHApp
         private void InitializeComponent()
         {
             treeView1 = new TreeView();
-            listBox1 = new ListBox();
             splitContainer1 = new SplitContainer();
             treeView2 = new TreeView();
             splitContainer2 = new SplitContainer();
             richTextBox1 = new RichTextBox();
+            dataGridView1 = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
             button1 = new Button();
-            checkedListBox1 = new CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -46,6 +49,7 @@ namespace SSHApp
             splitContainer2.Panel1.SuspendLayout();
             splitContainer2.Panel2.SuspendLayout();
             splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // treeView1
@@ -59,16 +63,6 @@ namespace SSHApp
             treeView1.Size = new Size(226, 298);
             treeView1.TabIndex = 0;
             treeView1.AfterCheck += treeView1_AfterCheck;
-            // 
-            // listBox1
-            // 
-            listBox1.Dock = DockStyle.Fill;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(0, 0);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(198, 601);
-            listBox1.TabIndex = 5;
             // 
             // splitContainer1
             // 
@@ -115,39 +109,65 @@ namespace SSHApp
             // 
             // splitContainer2.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(checkedListBox1);
-            splitContainer2.Panel2.Controls.Add(listBox1);
+            splitContainer2.Panel2.Controls.Add(dataGridView1);
             splitContainer2.Size = new Size(951, 601);
             splitContainer2.SplitterDistance = 749;
             splitContainer2.TabIndex = 8;
             // 
             // richTextBox1
             // 
-            richTextBox1.Location = new Point(0, 3);
+            richTextBox1.Dock = DockStyle.Fill;
+            richTextBox1.Location = new Point(0, 0);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(749, 595);
+            richTextBox1.Size = new Size(749, 601);
             richTextBox1.TabIndex = 3;
             richTextBox1.Text = "";
             richTextBox1.WordWrap = false;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3 });
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(0, 0);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowTemplate.DefaultCellStyle.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridView1.RowTemplate.ReadOnly = true;
+            dataGridView1.Size = new Size(198, 601);
+            dataGridView1.TabIndex = 11;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.HeaderText = "Host";
+            dataGridViewTextBoxColumn1.Name = "Host";
+            dataGridViewTextBoxColumn1.Width = 250;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "Command";
+            dataGridViewTextBoxColumn2.Name = "Command";
+            dataGridViewTextBoxColumn2.Width = 250;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "PID";
+            dataGridViewTextBoxColumn3.Name = "PID";
+            dataGridViewTextBoxColumn1.Width = 50;
+            // 
             // button1
             // 
-            button1.Location = new Point(536, 11);
+            button1.Location = new Point(37, 11);
             button1.Name = "button1";
             button1.Size = new Size(146, 23);
             button1.TabIndex = 9;
             button1.Text = "ADD";
             button1.UseVisualStyleBackColor = true;
             button1.Click += btn_add_Click;
-            // 
-            // checkedListBox1
-            // 
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(0, 204);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(195, 76);
-            checkedListBox1.TabIndex = 10;
             // 
             // MainForm
             // 
@@ -170,6 +190,7 @@ namespace SSHApp
             splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
             splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
 
         }
@@ -187,12 +208,14 @@ namespace SSHApp
         #endregion
 
         private TreeView treeView1;
-        private ListBox listBox1;
         private SplitContainer splitContainer1;
         private SplitContainer splitContainer2;
         private Button button1;
         private TreeView treeView2;
         private RichTextBox richTextBox1;
-        private CheckedListBox checkedListBox1;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }

@@ -18,3 +18,6 @@ APP	SmartJobs	sudo tail -f /home/smartjobs/shared/log/smartjobs.log
 APP	SMDP	sudo tail -f /home/smdp/shared/log/smdp.log
 APP	TDE	sudo tail -f /home/tde/shared/log/tde.log
 APP	VNC	sudo tail -f /home/vnc/shared/log/vnc.log
+Postgres	13	sudo tail -f /var/log/postgresql/postgresql-13-main.log
+Postgres	12	sudo tail -f /var/log/postgresql/postgresql-12-main.log
+Postgres	18	sudo tail -f /var/log/postgresql/postgresql-18-main.log
