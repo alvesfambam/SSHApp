@@ -87,7 +87,7 @@ namespace SSHApp
             }
         }
 
-        private void ExecuteSshCommand(string host, string username, string pemFilePath, string command)
+        private void ExecuteSshCommand(string host, string username, string pemFilePath, string command, string color = "White")
         {
             try
             {
@@ -122,7 +122,10 @@ namespace SSHApp
                             // Update TextBox on UI thread
                             richTextBox1.Invoke((Action)(() =>
                             {
-                                richTextBox1.AppendText(line + Environment.NewLine);
+                                Color namedColor = Color.FromName(color);
+                                richTextBox1.SelectionBackColor = namedColor;
+                                richTextBox1.AppendText(host + ":    " + line + Environment.NewLine);
+                                richTextBox1.SelectionBackColor = Color.White;
                             }));
                         }
                         System.Threading.Thread.Sleep(100); // Prevent tight loop
@@ -178,6 +181,7 @@ namespace SSHApp
             List<TreeNode> checked_cmds = new List<TreeNode>();
             GetCheckedLevelNodes(treeView1.Nodes, 2, checked_nodes);
             GetCheckedLevelNodes(treeView2.Nodes, 2, checked_cmds);
+// var tasks = new List<Task<string>>;
 
             foreach (TreeNode node in checked_nodes)
             {
@@ -237,6 +241,10 @@ namespace SSHApp
         {
 
         }
+        private void RemoveItem_Click(object sender, EventArgs e)
+        {
 
+        }
+        
     }
 }

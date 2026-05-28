@@ -66,10 +66,10 @@ STAGING	SKAM	stg-skam2.host-au.telematics.com
 STAGING	VOIP	stg-voip2
 STAGING	WEB	stg-web5.host-au.telematics.com
 STAGING	WEB	stg-web6.host-au.telematics.com
-PRODUCTION	APP	app22.host-au.telematics.com
-PRODUCTION	APP	app23.host-au.telematics.com
-PRODUCTION	APP	app24.host-au.telematics.com
-PRODUCTION	APP	app25.host-au.telematics.com
+PRODUCTION	APP	app11.host-au.telematics.com
+PRODUCTION	APP	app12.host-au.telematics.com
+PRODUCTION	APP	app13.host-au.telematics.com
+PRODUCTION	APP	app14.host-au.telematics.com
 PRODUCTION	ARDB	ardb1.host-au.telematics.com
 PRODUCTION	DB	db11.host-au.telematics.com
 PRODUCTION	DB	db12.host-au.telematics.com
@@ -127,9 +127,9 @@ US	PLDB	pldb2.host-us.telematics.com
 US	WEB	web1.host-us.telematics.com
 US	WEB	web2.host-us.telematics.com
 US	WEB	web3.host-us.telematics.com
-UK	APP	app5.host-uk.telematics.com
-UK	APP	app6.host-uk.telematics.com
-UK	APP	app7.host-uk.telematics.com
+UK	APP	app10.host-uk.telematics.com
+UK	APP	app11.host-uk.telematics.com
+UK	APP	app12.host-uk.telematics.com
 UK	ARDB	ardb1.host-uk.telematics.com
 UK	DB	db7.host-uk.telematics.com
 UK	DB	db8.host-uk.telematics.com

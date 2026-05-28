@@ -21,3 +21,4 @@ APP	VNC	sudo tail -f /home/vnc/shared/log/vnc.log
 Postgres	13	sudo tail -f /var/log/postgresql/postgresql-13-main.log
 Postgres	12	sudo tail -f /var/log/postgresql/postgresql-12-main.log
 Postgres	18	sudo tail -f /var/log/postgresql/postgresql-18-main.log
+Grep 	SysLog	sudo grep  -f /var/log/syslog
