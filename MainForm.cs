@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 
 
+
 namespace SSHApp
 {
 
@@ -96,12 +97,15 @@ namespace SSHApp
                 var privateKey = new PrivateKeyFile(privateKeyStream);
 
                 // Set up SSH connection info
+
                 var connectionInfo = new ConnectionInfo(
+                    
                     host: host,
                     username: username,
+                    // proxyHost: "jumpbox.telematics.com",
+                    // proxyPort: 22,
                     new PrivateKeyAuthenticationMethod(username, privateKey)
                 );
-
                 // Create SSH client
                 using var client = new SshClient(connectionInfo);
                 client.Connect();
