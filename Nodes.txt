@@ -71,8 +71,9 @@ PRODUCTION	APP	app12.host-au.telematics.com
 PRODUCTION	APP	app13.host-au.telematics.com
 PRODUCTION	APP	app14.host-au.telematics.com
 PRODUCTION	ARDB	ardb1.host-au.telematics.com
-PRODUCTION	DB	db11.host-au.telematics.com
-PRODUCTION	DB	db12.host-au.telematics.com
+PRODUCTION	DB	db13.host-au.telematics.com
+PRODUCTION	DB	db14.host-au.telematics.com
+PRODUCTION	DB	db15.host-au.telematics.com
 PRODUCTION	IPSEC	ipsec.host-au.telematics.com
 PRODUCTION	KCAPP	kc-app1.host-au.telematics.com
 PRODUCTION	KCAPP	kc-app2.host-au.telematics.com

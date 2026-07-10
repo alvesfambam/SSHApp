@@ -1,7 +1,9 @@
+using Org.BouncyCastle.Asn1.X509;
 using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -96,79 +98,116 @@ namespace SSHApp
                 using var privateKeyStream = new FileStream(pemFilePath, FileMode.Open, FileAccess.Read);
                 var privateKey = new PrivateKeyFile(privateKeyStream);
 
-                // Set up SSH connection info
-
-                var connectionInfo = new ConnectionInfo(
-                    
-                    host: host,
+                // Relay (jump host) credentials                
+                var connectionInfoRelay = new ConnectionInfo(
+                    host: "jumpbox.telematics.com",
+                    port: 22,
                     username: username,
-                    // proxyHost: "jumpbox.telematics.com",
-                    // proxyPort: 22,
                     new PrivateKeyAuthenticationMethod(username, privateKey)
                 );
-                // Create SSH client
-                using var client = new SshClient(connectionInfo);
-                client.Connect();
 
-                if (client.IsConnected)
-                {
-                    // Run command and stream output
-                    using var cmd = client.CreateCommand(command);
-                    var asyncResult = cmd.BeginExecute();
-
-                    // Read output in real-time
-                    using var reader = new StreamReader(cmd.OutputStream);
-                    while (!reader.EndOfStream || !asyncResult.IsCompleted)
+                // Step 1: Connect to the relay server
+                    using (var relayClient = new SshClient(connectionInfoRelay))
                     {
-                        string line = reader.ReadLine();
-                        if (line != null)
-                        {
-                            // Update TextBox on UI thread
-                            richTextBox1.Invoke((Action)(() =>
-                            {
-                                Color namedColor = Color.FromName(color);
-                                richTextBox1.SelectionBackColor = namedColor;
-                                richTextBox1.AppendText(host + ":    " + line + Environment.NewLine);
-                                richTextBox1.SelectionBackColor = Color.White;
-                            }));
-                        }
-                        System.Threading.Thread.Sleep(100); // Prevent tight loop
-                    }
-
-                    // Read any remaining output
-                    string remaining = cmd.Result;
-                    if (!string.IsNullOrEmpty(remaining))
-                    {
-                        richTextBox1.Invoke((Action)(() =>
-                        {
-                            richTextBox1.AppendText(remaining + Environment.NewLine);
-                        }));
-                    }
-
-                    // Check for errors
-                    if (!string.IsNullOrEmpty(cmd.Error))
-                    {
-                        richTextBox1.Invoke((Action)(() =>
-                        {
-                            richTextBox1.AppendText("Error:" + cmd.Error + Environment.NewLine);
-                        }));
-                    }
-
-                    client.Disconnect();
-                }
-                else
-                {
+                        relayClient.Connect();
                     richTextBox1.Invoke((Action)(() =>
                     {
-                        richTextBox1.AppendText("Failed to connect to SSH server." + Environment.NewLine);
+                        richTextBox1.AppendText("Connected to relay server." + Environment.NewLine);
                     }));
+                    // Step 2: Forward a local port through the relay to the target
+                    using (var portForward = new ForwardedPortLocal("127.0.0.1", 0, host, (uint)22))
+                        {
+                            relayClient.AddForwardedPort(portForward);
+                            portForward.Start();
+
+                        //Console.WriteLine($"Forwarding local port {portForward.BoundPort} to {host}:22 via relay.");
+                        richTextBox1.Invoke((Action)(() =>
+                        {
+                            richTextBox1.AppendText($"Forwarding local port {portForward.BoundPort} to {host}:22 via relay." + Environment.NewLine);
+                        }));
+                        // Step 3: Connect to the target through the forwarded port
+                        using (var targetClient = new SshClient(
+                                     new ConnectionInfo(
+                                        "127.0.0.1",
+                                        (int)portForward.BoundPort,
+                                        username,
+                                        new PrivateKeyAuthenticationMethod(username, privateKey)
+                                        )
+                                ))
+                            {
+                            targetClient.Connect();
+                            richTextBox1.Invoke((Action)(() =>
+                            {
+                                richTextBox1.AppendText("Connected to target server through relay." + Environment.NewLine);
+                            }));
+                                                        
+                            if (targetClient.IsConnected)
+                            {
+                                // Run command and stream output
+                                var clientcmd = targetClient.CreateCommand(command);
+                                var asyncResult = clientcmd.BeginExecute();
+
+                                // Read output in real-time
+                                using var reader = new StreamReader(clientcmd.OutputStream);
+                                while (!reader.EndOfStream || !asyncResult.IsCompleted)
+                                {
+                                    string line = reader.ReadLine();
+                                    if (line != null)
+                                    {
+                                        // Update TextBox on UI thread
+                                        richTextBox1.Invoke((Action)(() =>
+                                        {
+                                            Color namedColor = Color.FromName(color);
+                                            richTextBox1.SelectionBackColor = namedColor;
+                                            richTextBox1.AppendText(host + ":    " + line + Environment.NewLine);
+                                            richTextBox1.SelectionBackColor = Color.White;
+                                        }));
+                                    }
+                                    System.Threading.Thread.Sleep(100); // Prevent tight loop
+                                }
+
+                                // Read any remaining output
+                                string remaining = clientcmd.Result;
+                                if (!string.IsNullOrEmpty(remaining))
+                                {
+                                    richTextBox1.Invoke((Action)(() =>
+                                    {
+                                        richTextBox1.AppendText(remaining + Environment.NewLine);
+                                    }));
+                                }
+
+                                // Check for errors
+                                if (!string.IsNullOrEmpty(clientcmd.Error))
+                                {
+                                    richTextBox1.Invoke((Action)(() =>
+                                    {
+                                        richTextBox1.AppendText("Error:" + clientcmd.Error + Environment.NewLine);
+                                    }));
+                                }
+
+                                //targetClient.Disconnect();
+                            }
+                            else
+                            {
+                                richTextBox1.Invoke((Action)(() =>
+                                {
+                                    richTextBox1.AppendText("Failed to connect to SSH server." + Environment.NewLine);
+                                }));
+                            }
+
+                            portForward.Stop();
+                            targetClient.Disconnect();
+                        }
+                    }
+
+                    relayClient.Disconnect();
                 }
             }
             catch (Exception ex)
             {
                 richTextBox1.Invoke((Action)(() =>
                 {
-                    richTextBox1.AppendText($"Exception:{ex.Message}" + Environment.NewLine);
+                    richTextBox1.AppendText($"Exception:{ex.Message}:{ex.Source}" + Environment.NewLine);
                 }));
             }
         }
@@ -238,8 +277,6 @@ namespace SSHApp
                 }
             }
         }
-
-        // Recursive method to iterate through all nodes
         
         private void MainForm_Load(object sender, EventArgs e)
         {
