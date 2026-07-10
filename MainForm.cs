@@ -160,7 +160,7 @@ namespace SSHApp
                                             Color namedColor = Color.FromName(color);
                                             richTextBox1.SelectionBackColor = namedColor;
                                             richTextBox1.AppendText(host + ":    " + line + Environment.NewLine);
-                                            richTextBox1.SelectionBackColor = Color.White;
+                                            //richTextBox1.SelectionBackColor = Color.White;
                                         }));
                                     }
                                     System.Threading.Thread.Sleep(100); // Prevent tight loop
