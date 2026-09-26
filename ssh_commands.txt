@@ -1,5 +1,12 @@
 ##Group		Name	Command
 SysLog	SysLog	sudo tail -f /var/log/syslog
+SysLog	Journalctl	sudo journalctl -f
+SysLog	wtmp	sudo tail -f /var/log/wtmp
+SysLog	Last	sudo last -n 20
+Syslog	FailedLogins	sudo lastb 
+SysLog	FailedLast	sudo lastb
+SysLog	Auth	sudo tail -f /var/log/auth.log
+SysLog	History	sudo grep -H -i  "error" /home/*/.bash_history /root/.bash_history /var/home/*/.bash_history
 APP	API	sudo tail -f /home/api/shared/log/api.log
 APP	B2B	sudo tail -f /home/b2b/shared/log/b2b.log
 APP	BUS	sudo tail -f /home/bus/shared/log/bus.log
@@ -21,4 +28,22 @@ APP	VNC	sudo tail -f /home/vnc/shared/log/vnc.log
 Postgres	13	sudo tail -f /var/log/postgresql/postgresql-13-main.log
 Postgres	12	sudo tail -f /var/log/postgresql/postgresql-12-main.log
 Postgres	18	sudo tail -f /var/log/postgresql/postgresql-18-main.log
-Grep 	SysLog	sudo grep  -f /var/log/syslog
+WEB	APACHE	sudo tail -f /var/log/apache2/*.log
+WEB	APACHE	sudo tail -f /var/log/apache2/nextgen.telematics.com_error.log 
+WEB	APACHE	sudo tail -f /var/log/apache2/tn360.tn360-*.telematics.com_access.log 
+WEB	APACHE	sudo tail -f /var/log/apache2/sherlock.vltzz-*.telematics.com_access.log 
+Keycloak	Server	sudo tail -f /home/keycloak/current/standalone/log/server.log
+Keycloak	Audit	sudo tail -f /home/keycloak/current/standalone/log/audit.log
+Keycloak	Server	sudo tail -f /home/keycloak/shared/log/keycloak.log
+Keycloak	DB	sudo tail -f /var/log/postgresql/postgresql-17-main.log
+RABBitMQ	LOGS	sudo tail -f /mnt/log/rabbitmq/*.log
+DragonFly	LOGS	sudo tail -f /var/lib/ardb/log/dragonfly.log
+Chef	URL	sudo cat /etc/chef/client.rb | grep chef_server_url 
+Chef	Log	sudo tail -f /var/log/chef/client.log
+Chef	ServerLog	sudo tail -f /var/log/opscode/opscode-erchef/current
+Chef	ServerLog	sudo tail -f /var/log/opscode/opscode-erchef/erchef.log
+Chef	ServerLog	sudo tail -f /var/log/opscode/opscode-erchef/crash.log
+Chef	ServerLog	sudo tail -f /var/log/opscode/opscode-erchef/sasl-error.log
+Chef	ServerLog	sudo find /var/log/opscode/opscode-erchef -name request* -exec tail -f {} +
+Chef	ServerLog	sudo chef-server-ctl tail
+HAPROXY	HAPROXY	sudo tail -f /var/log/haproxy.log
